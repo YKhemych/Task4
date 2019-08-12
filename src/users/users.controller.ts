@@ -8,19 +8,19 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  getUsers(): IUser[] {
+  getUsers(): Promise<IUser[]> {
     return this.usersService.getUsers();
   }
   @Post()
-  createUser(@Body() createUserDto: CreateUserDto): IUser {
+  createUser(@Body() createUserDto: CreateUserDto): Promise<IUser> {
     return this.usersService.createUser(createUserDto);
   }
-  @Put()
-  updateUser(@Body() createUserDto: CreateUserDto): IUser {
-    return this.usersService.updateUser(createUserDto);
+  @Put(":id")
+  updateUser(@Param('id') id, @Body() createUserDto: CreateUserDto): Promise<IUser> {
+    return this.usersService.updateUser(id, createUserDto);
   }
   @Delete(':id')
-  deleteUser(@Param('id') id): object {
+  deleteUser(@Param('id') id): Promise<IUser> {
     return this.usersService.deleteUser(id);
 
   }
