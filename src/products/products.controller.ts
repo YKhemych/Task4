@@ -8,19 +8,19 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService){}
 
   @Get()
-  getProducts(): IProduct[] {
+  getProducts(): Promise<IProduct[]> {
     return this.productsService.getProducts();
   }
   @Post()
-  createProduct(@Body() createProductDto: CreateProductDto): IProduct {
+  createProduct(@Body() createProductDto: CreateProductDto): Promise<IProduct> {
     return this.productsService.createProduct(createProductDto);
   }
-  @Put()
-  updateProduct(@Body() createProductDto: CreateProductDto): IProduct {
-    return this.productsService.updateProduct(createProductDto);
+  @Put(':id')
+  updateProduct(@Param('id') id, @Body() createProductDto: CreateProductDto): Promise<IProduct> {
+    return this.productsService.updateProduct(id, createProductDto);
   }
   @Delete(':id')
-  deleteProduct(@Param('id') id): object {
+  deleteProduct(@Param('id') id): Promise<IProduct> {
     return this.productsService.deleteProduct(id);
   }
 }
